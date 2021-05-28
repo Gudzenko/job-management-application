@@ -1,2 +1,3 @@
 # job-management-application
-Django &amp; React
+
+Application use Django &amp; React
