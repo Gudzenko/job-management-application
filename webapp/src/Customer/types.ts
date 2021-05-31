@@ -17,7 +17,25 @@ export interface ICustomer {
   description: string;
 }
 
+export interface IResponce {
+  data: IResult;
+}
+
 export interface IResult {
   data: ICustomerWithId[];
   nextlink: string;
+}
+
+export interface IResponceSingle {
+  data: ICustomerWithId;
+}
+
+export interface IResultRequest {
+  data: any;
+}
+
+export interface IOperationResult {
+  id: number;
+  operation: string;
+  status: string;
 }

@@ -1,177 +1,154 @@
-import React from "react";
-import CustomersService from "./CustomersService";
-import { ICustomerWithId } from "./types";
-
-const customersService = new CustomersService();
-
-interface IState {
-  customer: ICustomerWithId;
-}
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getCustomer, createCustomer, updateCustomer } from "../redux/actions";
+import { ICustomerWithId, IOperationResult } from "./types";
+import { RootState } from "../redux/store";
 
 interface IProps {
   match: any;
 }
 
-class CustomerCreateUpdate extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      customer: {
-        pk: 0,
-        first_name: "",
-        last_name: "",
-        phone: "",
-        email: "",
-        address: "",
-        description: "",
-      },
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
+  const customer = useSelector<RootState, ICustomerWithId>(
+    (state: RootState) => state.customers.customer
+  );
+  const result = useSelector<RootState, IOperationResult>(
+    (state: RootState) => state.customers.result
+  );
+  const [cust, setCust] = useState<ICustomerWithId>({
+    pk: 0,
+    first_name: "",
+    last_name: "",
+    phone: "",
+    email: "",
+    address: "",
+    description: "",
+  });
+  const dispatch = useDispatch();
+  const {
+    match: { params },
+  } = props;
 
-  componentDidMount() {
-    const {
-      match: { params },
-    } = this.props;
+  useEffect(() => {
     if (params && params.pk) {
-      customersService.getCustomer(params.pk).then((c: ICustomerWithId) => {
-        this.setState({ customer: c });
-      });
+      dispatch(getCustomer(params.pk));
     }
-  }
+  }, [dispatch, params]);
 
-  handleCreate() {
-    const { customer } = this.state;
-    customersService
-      .createCustomer({
-        first_name: customer.first_name,
-        last_name: customer.last_name,
-        email: customer.email,
-        phone: customer.phone,
-        address: customer.address,
-        description: customer.description,
-      })
-      .then((result: any) => {
-        alert("Customer created!");
-      })
-      .catch(() => {
-        alert("There was an error! Please re-check your form.");
-      });
-  }
-  handleUpdate(pk: number) {
-    const { customer } = this.state;
-    customersService
-      .updateCustomer({
-        pk: pk,
-        first_name: customer.first_name,
-        last_name: customer.last_name,
-        email: customer.email,
-        phone: customer.phone,
-        address: customer.address,
-        description: customer.description,
-      })
-      .then((result: any) => {
-        alert("Customer updated!");
-      })
-      .catch(() => {
-        alert("There was an error! Please re-check your form.");
-      });
-  }
-  handleSubmit(event: any) {
-    const {
-      match: { params },
-    } = this.props;
+  useEffect(() => {
+    setCust(customer);
+  }, [customer]);
 
+  useEffect(() => {
+    if (result.status === "error") {
+      alert("There was an error! Please re-check your form.");
+    } else if (
+      result.status === "done" &&
+      result.operation === "create customer"
+    ) {
+      alert("Customer created!");
+    } else if (
+      result.status === "done" &&
+      result.operation === "update customer"
+    ) {
+      alert("Customer updated!");
+    }
+  }, [result]);
+
+  const handleCreate = () => {
+    dispatch(createCustomer(cust));
+  };
+  const handleUpdate = () => {
+    dispatch(updateCustomer(cust));
+  };
+  const handleSubmit = () => {
     if (params && params.pk) {
-      this.handleUpdate(params.pk);
+      handleUpdate();
     } else {
-      this.handleCreate();
+      handleCreate();
     }
-    event.preventDefault();
-  }
+  };
 
-  onChange(value: string, tag: string) {
-    let { customer } = this.state;
+  const onChange = (value: string, tag: string) => {
+    let newCustomer = { ...cust };
     switch (tag) {
       case "first_name":
-        customer.first_name = value;
+        newCustomer.first_name = value;
         break;
       case "last_name":
-        customer.last_name = value;
+        newCustomer.last_name = value;
         break;
       case "phone":
-        customer.phone = value;
+        newCustomer.phone = value;
         break;
       case "email":
-        customer.email = value;
+        newCustomer.email = value;
         break;
       case "address":
-        customer.address = value;
+        newCustomer.address = value;
         break;
       case "description":
-        customer.description = value;
+        newCustomer.description = value;
         break;
     }
-    this.setState({ customer });
-  }
+    setCust(newCustomer);
+  };
+  return (
+    <div>
+      <div className="form-group">
+        <label>First Name:</label>
+        <input
+          className="form-control"
+          type="text"
+          value={cust.first_name}
+          onChange={(e) => onChange(e.target.value, "first_name")}
+        />
 
-  render() {
-    const { customer } = this.state;
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label>First Name:</label>
-          <input
-            className="form-control"
-            type="text"
-            value={customer.first_name}
-            onChange={(e) => this.onChange(e.target.value, "first_name")}
-          />
+        <label>Last Name:</label>
+        <input
+          className="form-control"
+          type="text"
+          value={cust.last_name}
+          onChange={(e) => onChange(e.target.value, "last_name")}
+        />
 
-          <label>Last Name:</label>
-          <input
-            className="form-control"
-            type="text"
-            value={customer.last_name}
-            onChange={(e) => this.onChange(e.target.value, "last_name")}
-          />
+        <label>Phone:</label>
+        <input
+          className="form-control"
+          type="text"
+          value={cust.phone}
+          onChange={(e) => onChange(e.target.value, "phone")}
+        />
 
-          <label>Phone:</label>
-          <input
-            className="form-control"
-            type="text"
-            value={customer.phone}
-            onChange={(e) => this.onChange(e.target.value, "phone")}
-          />
+        <label>Email:</label>
+        <input
+          className="form-control"
+          type="text"
+          value={cust.email}
+          onChange={(e) => onChange(e.target.value, "email")}
+        />
 
-          <label>Email:</label>
-          <input
-            className="form-control"
-            type="text"
-            value={customer.email}
-            onChange={(e) => this.onChange(e.target.value, "email")}
-          />
+        <label>Address:</label>
+        <input
+          className="form-control"
+          type="text"
+          value={cust.address}
+          onChange={(e) => onChange(e.target.value, "address")}
+        />
 
-          <label>Address:</label>
-          <input
-            className="form-control"
-            type="text"
-            value={customer.address}
-            onChange={(e) => this.onChange(e.target.value, "address")}
-          />
+        <label>Description:</label>
+        <textarea
+          className="form-control"
+          value={cust.description}
+          onChange={(e) => onChange(e.target.value, "description")}
+        ></textarea>
 
-          <label>Description:</label>
-          <textarea
-            className="form-control"
-            value={customer.description}
-            onChange={(e) => this.onChange(e.target.value, "description")}
-          ></textarea>
-
-          <input className="btn btn-primary" type="submit" value="Submit" />
-        </div>
-      </form>
-    );
-  }
-}
+        <button className="btn btn-primary" onClick={handleSubmit}>
+          Submit
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default CustomerCreateUpdate;
