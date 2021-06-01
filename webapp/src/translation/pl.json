@@ -10,5 +10,8 @@
   "button_delete": "Delete",
   "button_update": "Update",
   "button_next": "Dalej",
-  "button_submit": "Zatwierdź"
+  "button_submit": "Zatwierdź",
+  "header": "Django React Demo",
+  "customers": "KLIENCI",
+  "create_customer": "UTWÓRZ KLIENTA"
 }

@@ -14,7 +14,7 @@ import common_ru from './translation/ru.json';
 
 i18next.init({
   interpolation: { escapeValue: false },
-  lng: 'ru',
+  lng: 'en',
   resources: {
     en: {
       common: common_en

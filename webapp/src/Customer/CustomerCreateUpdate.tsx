@@ -1,21 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { getCustomer, createCustomer, updateCustomer } from "../redux/actions";
-import { ICustomerWithId, IOperationResult } from "./types";
-import { RootState } from "../redux/store";
+import { ICustomerWithId } from "./types";
 
 interface IProps {
   match: any;
 }
 
-const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
-  const customer = useSelector<RootState, ICustomerWithId>(
-    (state: RootState) => state.customers.customer
-  );
-  const result = useSelector<RootState, IOperationResult>(
-    (state: RootState) => state.customers.result
-  );
+const CustomerCreateUpdate = (props: IProps) => {
+  const customer = useAppSelector((state) => state.customers.customer);
+  const result = useAppSelector((state) => state.customers.result);
   const [cust, setCust] = useState<ICustomerWithId>({
     pk: 0,
     first_name: "",
@@ -25,7 +20,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
     address: "",
     description: "",
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation("common");
   const {
     match: { params },

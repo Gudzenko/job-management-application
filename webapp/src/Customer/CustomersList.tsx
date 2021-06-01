@@ -1,22 +1,18 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { ICustomerWithId } from "./types";
 import {
   getCustomers,
   getCustomersByURL,
   deleteCustomer,
 } from "../redux/actions";
-import { RootState } from "../redux/store";
 
-const CustomersList: React.FC<any> = (props) => {
-  const customers = useSelector<RootState, ICustomerWithId[]>(
-    (state: RootState) => state.customers.customers
-  );
-  const nextPageURL = useSelector<RootState, string>(
-    (state: RootState) => state.customers.nextPageURL
-  );
-  const dispatch = useDispatch();
+const CustomersList = () => {
+  const customers = useAppSelector((state) => state.customers.customers);
+  const nextPageURL = useAppSelector((state) => state.customers.nextPageURL);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation("common");
 
   useEffect(() => {
@@ -60,7 +56,7 @@ const CustomersList: React.FC<any> = (props) => {
                 <button onClick={(e) => handleDelete(e, c.pk)}>
                   {t("button_delete")}
                 </button>
-                <a href={"/customer/" + c.pk}>{t("button_update")}</a>
+                <Link to={"/customer/" + c.pk}>{t("button_update")}</Link>
               </td>
             </tr>
           ))}
