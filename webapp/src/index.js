@@ -1,16 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import store from './redux/store'
+import {I18nextProvider} from "react-i18next";
+import i18next from "i18next";
 
-import './index.css';
+import store from './redux/store'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './index.css';
+import common_en from './translation/en.json';
+import common_pl from './translation/pl.json';
+import common_ru from './translation/ru.json';
+
+i18next.init({
+  interpolation: { escapeValue: false },
+  lng: 'ru',
+  resources: {
+    en: {
+      common: common_en
+    },
+    pl: {
+      common: common_pl
+    },
+    ru: {
+      common: common_ru
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <I18nextProvider i18n={i18next}>
+        <App />
+      </I18nextProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

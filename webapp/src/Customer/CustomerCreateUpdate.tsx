@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { getCustomer, createCustomer, updateCustomer } from "../redux/actions";
 import { ICustomerWithId, IOperationResult } from "./types";
 import { RootState } from "../redux/store";
@@ -25,6 +26,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
     description: "",
   });
   const dispatch = useDispatch();
+  const { t } = useTranslation("common");
   const {
     match: { params },
   } = props;
@@ -96,7 +98,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
   return (
     <div>
       <div className="form-group">
-        <label>First Name:</label>
+        <label>{t("first_name")}:</label>
         <input
           className="form-control"
           type="text"
@@ -104,7 +106,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
           onChange={(e) => onChange(e.target.value, "first_name")}
         />
 
-        <label>Last Name:</label>
+        <label>{t("last_name")}:</label>
         <input
           className="form-control"
           type="text"
@@ -112,7 +114,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
           onChange={(e) => onChange(e.target.value, "last_name")}
         />
 
-        <label>Phone:</label>
+        <label>{t("phone")}:</label>
         <input
           className="form-control"
           type="text"
@@ -120,7 +122,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
           onChange={(e) => onChange(e.target.value, "phone")}
         />
 
-        <label>Email:</label>
+        <label>{t("email")}:</label>
         <input
           className="form-control"
           type="text"
@@ -128,7 +130,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
           onChange={(e) => onChange(e.target.value, "email")}
         />
 
-        <label>Address:</label>
+        <label>{t("address")}:</label>
         <input
           className="form-control"
           type="text"
@@ -136,7 +138,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
           onChange={(e) => onChange(e.target.value, "address")}
         />
 
-        <label>Description:</label>
+        <label>{t("description")}:</label>
         <textarea
           className="form-control"
           value={cust.description}
@@ -144,7 +146,7 @@ const CustomerCreateUpdate: React.FC<any> = (props: IProps) => {
         ></textarea>
 
         <button className="btn btn-primary" onClick={handleSubmit}>
-          Submit
+          {t("button_submit")}
         </button>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { ICustomerWithId } from "./types";
 import {
   getCustomers,
@@ -16,6 +17,7 @@ const CustomersList: React.FC<any> = (props) => {
     (state: RootState) => state.customers.nextPageURL
   );
   const dispatch = useDispatch();
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     dispatch(getCustomers());
@@ -34,14 +36,14 @@ const CustomersList: React.FC<any> = (props) => {
       <table className="table">
         <thead key="thead">
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th>{t("number")}</th>
+            <th>{t("first_name")}</th>
+            <th>{t("last_name")}</th>
+            <th>{t("phone")}</th>
+            <th>{t("email")}</th>
+            <th>{t("address")}</th>
+            <th>{t("description")}</th>
+            <th>{t("actions")}</th>
           </tr>
         </thead>
         <tbody>
@@ -55,15 +57,17 @@ const CustomersList: React.FC<any> = (props) => {
               <td>{c.address}</td>
               <td>{c.description}</td>
               <td>
-                <button onClick={(e) => handleDelete(e, c.pk)}> Delete</button>
-                <a href={"/customer/" + c.pk}> Update</a>
+                <button onClick={(e) => handleDelete(e, c.pk)}>
+                  {t("button_delete")}
+                </button>
+                <a href={"/customer/" + c.pk}>{t("button_update")}</a>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
       <button className="btn btn-primary" onClick={nextPage}>
-        Next
+        {t("button_next")}
       </button>
     </div>
   );
