@@ -1,0 +1,17 @@
+{
+  "number": "#",
+  "first_name": "First name",
+  "last_name": "Last name",
+  "phone": "Phone",
+  "email": "Email",
+  "address": "Address",
+  "description": "Description",
+  "actions": "Actions",
+  "button_delete": "Delete",
+  "button_update": "Update",
+  "button_next": "Next",
+  "button_submit": "Submit",
+  "header": "Django React Demo",
+  "customers": "CUSTOMERS",
+  "create_customer": "CREATE CUSTOMER"
+}

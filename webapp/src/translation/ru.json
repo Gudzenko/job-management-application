@@ -1,0 +1,17 @@
+{
+  "number": "#",
+  "first_name": "Имя",
+  "last_name": "Фамилия",
+  "phone": "Телефон",
+  "email": "Email",
+  "address": "Адрес",
+  "description": "Описание",
+  "actions": "Акции",
+  "button_delete": "Удалить",
+  "button_update": "Обновить",
+  "button_next": "Далее",
+  "button_submit": "Подтвердить",
+  "header": "Django React Demo",
+  "customers": "КЛИЕНТЫ",
+  "create_customer": "СОЗДАТЬ КЛИЕНТА"
+}

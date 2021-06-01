@@ -1,21 +1,19 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { ICustomerWithId } from "./types";
 import {
   getCustomers,
   getCustomersByURL,
   deleteCustomer,
 } from "../redux/actions";
-import { RootState } from "../redux/store";
 
-const CustomersList: React.FC<any> = (props) => {
-  const customers = useSelector<RootState, ICustomerWithId[]>(
-    (state: RootState) => state.customers.customers
-  );
-  const nextPageURL = useSelector<RootState, string>(
-    (state: RootState) => state.customers.nextPageURL
-  );
-  const dispatch = useDispatch();
+const CustomersList = () => {
+  const customers = useAppSelector((state) => state.customers.customers);
+  const nextPageURL = useAppSelector((state) => state.customers.nextPageURL);
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     dispatch(getCustomers());
@@ -34,36 +32,38 @@ const CustomersList: React.FC<any> = (props) => {
       <table className="table">
         <thead key="thead">
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th>{t("number")}</th>
+            <th>{t("first_name")}</th>
+            <th>{t("last_name")}</th>
+            <th>{t("phone")}</th>
+            <th>{t("email")}</th>
+            <th>{t("address")}</th>
+            <th>{t("description")}</th>
+            <th>{t("actions")}</th>
           </tr>
         </thead>
         <tbody>
           {customers.map((c: ICustomerWithId) => (
             <tr key={c.pk}>
               <td>{c.pk} </td>
-              <td>{c.first_name}</td>
-              <td>{c.last_name}</td>
+              <td>{c.firstName}</td>
+              <td>{c.lastName}</td>
               <td>{c.phone}</td>
               <td>{c.email}</td>
               <td>{c.address}</td>
               <td>{c.description}</td>
               <td>
-                <button onClick={(e) => handleDelete(e, c.pk)}> Delete</button>
-                <a href={"/customer/" + c.pk}> Update</a>
+                <button onClick={(e) => handleDelete(e, c.pk)}>
+                  {t("button_delete")}
+                </button>
+                <Link to={"/customer/" + c.pk}>{t("button_update")}</Link>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
       <button className="btn btn-primary" onClick={nextPage}>
-        Next
+        {t("button_next")}
       </button>
     </div>
   );

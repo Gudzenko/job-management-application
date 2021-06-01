@@ -13,8 +13,8 @@ const initialState: IInitState = {
   nextPageURL: "",
   customer: {
     pk: 0,
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     phone: "",
     email: "",
     address: "",
