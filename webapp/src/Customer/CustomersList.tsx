@@ -46,8 +46,8 @@ const CustomersList = () => {
           {customers.map((c: ICustomerWithId) => (
             <tr key={c.pk}>
               <td>{c.pk} </td>
-              <td>{c.first_name}</td>
-              <td>{c.last_name}</td>
+              <td>{c.firstName}</td>
+              <td>{c.lastName}</td>
               <td>{c.phone}</td>
               <td>{c.email}</td>
               <td>{c.address}</td>

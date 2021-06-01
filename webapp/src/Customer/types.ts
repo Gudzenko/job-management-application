@@ -1,7 +1,7 @@
 export interface ICustomerWithId {
   pk: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   phone: string;
   email: string;
   address: string;
@@ -9,8 +9,8 @@ export interface ICustomerWithId {
 }
 
 export interface ICustomer {
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   phone: string;
   email: string;
   address: string;

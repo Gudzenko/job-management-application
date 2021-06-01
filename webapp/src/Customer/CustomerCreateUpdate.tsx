@@ -13,8 +13,8 @@ const CustomerCreateUpdate = (props: IProps) => {
   const result = useAppSelector((state) => state.customers.result);
   const [cust, setCust] = useState<ICustomerWithId>({
     pk: 0,
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     phone: "",
     email: "",
     address: "",
@@ -70,10 +70,10 @@ const CustomerCreateUpdate = (props: IProps) => {
     let newCustomer = { ...cust };
     switch (tag) {
       case "first_name":
-        newCustomer.first_name = value;
+        newCustomer.firstName = value;
         break;
       case "last_name":
-        newCustomer.last_name = value;
+        newCustomer.lastName = value;
         break;
       case "phone":
         newCustomer.phone = value;
@@ -97,7 +97,7 @@ const CustomerCreateUpdate = (props: IProps) => {
         <input
           className="form-control"
           type="text"
-          value={cust.first_name}
+          value={cust.firstName}
           onChange={(e) => onChange(e.target.value, "first_name")}
         />
 
@@ -105,7 +105,7 @@ const CustomerCreateUpdate = (props: IProps) => {
         <input
           className="form-control"
           type="text"
-          value={cust.last_name}
+          value={cust.lastName}
           onChange={(e) => onChange(e.target.value, "last_name")}
         />
 
