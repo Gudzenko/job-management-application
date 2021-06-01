@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import {I18nextProvider} from "react-i18next";
 import i18next from "i18next";
+import { initReactI18next } from "react-i18next";
 
 import store from './redux/store'
 import App from './App';
@@ -12,7 +12,7 @@ import common_en from './translation/en.json';
 import common_pl from './translation/pl.json';
 import common_ru from './translation/ru.json';
 
-i18next.init({
+i18next.use(initReactI18next).init({
   interpolation: { escapeValue: false },
   lng: 'en',
   resources: {
@@ -31,9 +31,7 @@ i18next.init({
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <I18nextProvider i18n={i18next}>
-        <App />
-      </I18nextProvider>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
